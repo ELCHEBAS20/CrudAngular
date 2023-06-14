@@ -1,0 +1,916 @@
+usuarios
+
+  <div class="d-flex flex-row">
+    <div class="bx-flex mx-5" style="position: relative;top:40px;">
+      <div id="accordion">
+        <div class="card col-md-12">
+          <div class="card-header" id="headingOne">
+            <h5 class="mb-0">
+              <button class="btn btn-primary" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
+                aria-controls="collapseOne">
+                <strong><i class="fa-solid fa-user"></i>&nbsp;&nbsp;Empleado</strong>
+              </button>
+            </h5>
+          </div>
+
+          <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+            <div class="card-body">
+              <small [style]="{'display': VisibleMsg ? 'block' : 'none'}"><i
+                  class="fa-solid fa-check text-success"></i>&nbsp;<strong>Actualizado el empleado con
+                  exito.</strong></small>
+              <div class="d-flex flex-row justify-content-end" style="position: relative;top: -20px;">
+                <div class="bg-success" id="rstActive"></div>
+                <div class="mx-5 "><strong>Activado</strong>
+                </div>
+                <div class="bg-danger" id="rstActive"></div>
+                <div class="mx-5"><strong>No Activado</strong></div>
+              </div>
+
+
+              <table class="table" style="width: 1120px; box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">NombreUsuario</th>
+                    <th scope="col">Usuario</th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>
+
+                  <tr *ngFor="let item of datafinal;index as index">
+                    <td>{{index+1}}</td>
+                    <td *ngIf="datafinal[index].estadoCajero=='1';else loggedOut">
+                      <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input"
+                          id="customSwitch{{datafinal[index].idCajero}}"
+                          (click)="function_Update_Switch(datafinal[index].idCajero,$event)">
+                        <label class="custom-control-label" for="customSwitch{{datafinal[index].idCajero}}"></label>
+                      </div>
+                    </td>
+                    <ng-template #loggedOut>
+                      <td>
+                        <div class="custom-control custom-switch">
+                          <input type="checkbox" class="custom-control-input"
+                            id="customSwitch{{datafinal[index].idCajero}}"
+                            (click)="function_Update_Switch(datafinal[index].idCajero,$event)" disabled checked>
+                          <label class="custom-control-label" for="customSwitch{{datafinal[index].idCajero}}"></label>
+                        </div>
+                      </td>
+                    </ng-template>
+                    <td>{{datafinal[index].nombreCajero}}</td>
+                    <td>{{datafinal[index].usuarioCajero}}</td>
+                    <td>{{datafinal[index].generoCajero}}</td>
+                    <td>
+                      <button class="btn-sm btn_modificar" [attr.data-toggle]="'modal'"
+                        [attr.data-target]="'#exampleModal'+index" id="btn_modificar{{index}}"><i
+                          style="font-size: 20px;" data-toggle="tooltip" data-placement="top" title="Modificar"
+                          class="fa-solid fa-pen text-primary"></i></button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+            </div>
+          </div>
+        </div>
+        <div class="card col-md-12">
+          <div class="card-header" id="headingTwo">
+            <h5 class="mb-0">
+              <button class="btn btn-success collapsed" data-toggle="collapse" data-target="#collapseTwo"
+                aria-expanded="false" aria-controls="collapseTwo">
+                <strong><i class="fa-solid fa-check"></i>&nbsp;&nbsp;Empleado Activos</strong>
+              </button>
+            </h5>
+          </div>
+          <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+            <div class="card-body">
+
+
+              <div class="d-flex flex-row justify-content-end" style="position: relative;top: -20px;">
+                <div class="bg-success" id="rstActive"></div>
+                <div class="mx-5 "><strong>Activado</strong>
+                </div>
+                <div class="bg-danger" id="rstActive"></div>
+                <div class="mx-5"><strong>No Activado</strong></div>
+              </div>
+
+              <div style="width: 1120px;box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;"
+                [ngStyle]="{'display': (disabled_table) ? 'none' : 'block' }">
+                <p align="center"><strong>¡En Estos Momentos No Se Encuentra Ningun Activo En El Sistema!</strong></p>
+              </div>
+
+              <table class="table" id="table_data"
+                [ngStyle]="{'display': (disabled_table) ? 'width:1120;text-align:center;box-shadow:rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px' : '' }"
+                style="width: 1120px;box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">Perfil</th>
+                    <th scope="col">NombreUsuario</th>
+                    <th scope="col">Ocupacion</th>
+                    <th scope="col">Estado</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of datafinal;index as index;">
+                    <ng-container *ngIf="datafinal[index].estadoCajero!='0'">
+                      <td *ngIf="datafinal[index].generoCajero!='F';else ImgWoman">
+                        <div class="image">
+                          <img src="../../assets/dist/img/ImgMan.jpg" width="30" class="img-circle elevation-2"
+                            alt="User Image">
+                        </div>
+                      </td>
+                      <ng-template #ImgWoman>
+                        <td>
+                          <div class="image">
+                            <img src="../../assets/dist/img/ImgWoman.jpg" width="30" class="img-circle elevation-2"
+                              alt="User Image">
+                          </div>
+                        </td>
+                      </ng-template>
+                      <td>{{datafinal[index].usuarioCajero}}</td>
+                      <td>Cajero</td>
+                      <td>
+                        <div class="bx-active bg-success"></div>
+                      </td>
+                    </ng-container>
+
+
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="card col-md-12">
+          <div class="card-header" id="headingThree">
+            <h5 class="mb-0">
+              <button class="btn btn-danger collapsed" data-toggle="collapse" data-target="#collapseThree"
+                aria-expanded="false" aria-controls="collapseThree">
+                <strong><i class="fa-solid fa-xmark"></i>&nbsp;&nbsp;Empleado NO activos</strong>
+              </button>
+            </h5>
+          </div>
+          <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+            <div class="card-body">
+              <div class="d-flex flex-row justify-content-end" style="position: relative;top: -20px;">
+                <div class="bg-success" id="rstActive"></div>
+                <div class="mx-5 "><strong>Activado</strong>
+                </div>
+                <div class="bg-danger" id="rstActive"></div>
+                <div class="mx-5"><strong>No Activado</strong></div>
+              </div>
+
+              <div style="width: 1120px;box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;"
+                [ngStyle]="{'display': (disabled_table_NO) ? 'none' : 'block' }">
+                <p align="center"><strong>¡En Estos Momentos No Se Encuentra Ningun Desactivado En El Sistema!</strong>
+                </p>
+              </div>
+
+              <table class="table" id="table_data_NO"
+                [ngStyle]="{'display': (disabled_table_NO) ? 'width:1120;text-align:center;box-shadow:rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px' : '' }"
+                style="width: 1120px;box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">Perfil</th>
+                    <th scope="col">NombreUsuario</th>
+                    <th scope="col">Ocupacion</th>
+                    <th scope="col">Estado</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of datafinal;index as index;">
+                    <ng-container *ngIf="datafinal[index].estadoCajero!='1'">
+                      <td *ngIf="datafinal[index].generoCajero!='F';else ImgWoman">
+                        <div class="image">
+                          <img src="../../assets/dist/img/ImgMan.jpg" width="30" class="img-circle elevation-2"
+                            alt="User Image">
+                        </div>
+                      </td>
+                      <ng-template #ImgWoman>
+                        <td>
+                          <div class="image">
+                            <img src="../../assets/dist/img/ImgWoman.jpg" width="30" class="img-circle elevation-2"
+                              alt="User Image">
+                          </div>
+                        </td>
+                      </ng-template>
+                      <td>{{datafinal[index].usuarioCajero}}</td>
+                      <td>Cajero</td>
+                      <td>
+                        <div class="bx-active bg-danger"></div>
+                      </td>
+                    </ng-container>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="card col-md-8">
+          <div class="card-header" id="headingThree">
+            <h5 class="mb-0">
+              <button class="btn btn-warning collapsed" data-toggle="collapse" data-target="#collapsefour"
+                aria-expanded="false" aria-controls="collapseThree">
+                <strong><i class="fa-solid fa-plus"></i>&nbsp;&nbsp;Agregar Empleado</strong>
+              </button>
+            </h5>
+          </div>
+          <div id="collapsefour" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+            <div class="card-body">
+              <form style="width: 1120px;" [formGroup]="UserForm"
+                (ngSubmit)="function_InsertarCajeros(UserForm.value,EstadoValue,CargoValue)">
+                <div class="row my-3">
+
+                  <div class="col-md-4">
+                    <div class="form-outline">
+                      <label class="form-label" for="typeText"><small class="text-danger">*</small>Nombre: </label>
+                      <input type="text" id="typeText" class="form-control" formControlName="Nombre" />
+                      <small id="txt_error0" style="display: none;" class="form-text text-danger">El nombre es un campo
+                        requerido.</small>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-outline">
+                      <label class="form-label" for="typeText">Apellido: </label>
+                      <input type="text" id="typeText" class="form-control" formControlName="Apellido" />
+                      <small id="txt_error1" style="display: none;" class="form-text text-danger">El Apellido es un
+                        campo requerido.</small>
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="row my-3">
+                  <div class="col-md-4">
+                    <div class="form-outline">
+                      <label class="form-label" for="typeEmail">Cargo: </label>
+                      <input type="text" value="Cajero" readonly class=" form-control" #CargoValue />
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-outline">
+                      <label class="form-label" for="typePhone"><small class="text-danger">*</small>Usuario: </label>
+                      <input type="text" id="typePhone" class="form-control" formControlName="Usuario" />
+                      <small id="txt_error2" style="display: none;" class="form-text text-danger">El Usuario es un campo
+                        requerido.</small>
+                    </div>
+                  </div>
+                </div>
+                <div class="row my-3">
+                  <div class="col-md-4">
+                    <div class="form-outline">
+                      <label class="form-label" for="typeEmail"><small class="text-danger">*</small>Contraseña: </label>
+                      <input type="text" maxlength="8" min="8" id="txt_pswd_regi" class="form-control"
+                        formControlName="Contraseña" />
+                      <small id="txt_error3" style="display: none;" class="form-text text-danger">La Contraseña es un
+                        campo requerido.</small>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-outline">
+                      <label class="form-label" for="typePhone"><small class="text-danger">*</small>Genero: </label>
+                      <input type="text" id="typePhone" class="form-control" formControlName="Genero" />
+                      <small id="txt_error4" style="display: none;" class="form-text text-danger">El Genero es un campo
+                        requerido.</small>
+                    </div>
+                  </div>
+                </div>
+                <div class="row my-3">
+                  <div class="col-md-4">
+                    <div class="form-outline">
+                      <label class="form-label" for="typeEmail"><small class="text-danger">*</small>Estado: </label>
+                      <input type="text" id="typeEmail" value="1" class="form-control" #EstadoValue readonly />
+                    </div>
+                  </div>
+                </div>
+                <div class="d-flex justify-content-center" style="position: relative;left: -180px;">
+                  <button class="btn btn-primary w-50">Registrar</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngFor="let item of datafinal;index as index">
+  <div class="modal fade" id="exampleModal{{index}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel"><strong>Información Empleado</strong></h5>
+          <button type="button" id="close_modal{{index}}" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div id="txt_error{{index}}" style="color: red; text-align: center;"></div>
+          <form id="form_group" #formTemplate="ngForm" (ngSubmit)="function_UpdateEmpleadoTotal(index,formTemplate)">
+            <div class="form-group">
+              <label style="display: none;" for="exampleInputEmail1">idEmpleado </label>
+              <input type="hidden" class="form-control " name="txt_id" aria-describedby="emailHelp"
+                placeholder="Enter Nombre" ngModel="{{datafinal[index].idCajero}}">
+              <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Nombre Emplead@: </label>
+              <input type="text" ngModel="{{datafinal[index].nombreCajero}}" class="form-control"
+                aria-describedby="emailHelp" name="txt_nombre" placeholder="Enter Nombre">
+              <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+            </div>
+
+
+            <div class="form-group">
+              <label for="exampleInputEmail1">Apellido Emplead@: </label>
+              <input type="text" name="txt_apellido" class="form-control" ngModel="{{datafinal[index].apellidoCajero}}"
+                aria-describedby="emailHelp" placeholder="Enter Apellido">
+            </div>
+
+
+            <div class="form-group">
+              <label for="exampleInputEmail1">Usuari@ Emplead@: </label>
+              <input type="text" name="txt_user" class="form-control" ngModel="{{datafinal[index].usuarioCajero}}"
+                aria-describedby="emailHelp" placeholder="Enter Usuario">
+            </div>
+
+
+
+            <div class="form-group">
+              <label for="exampleInputEmail1">Contraseña: </label>
+              <input type="email" name="txt_pswd" ngModel="{{datafinal[index].pswdCajero}}"
+                class="form-control txt_pswd_input" aria-describedby="emailHelp" placeholder="Enter Contraseña">
+            </div>
+
+            <div class="form-group">
+              <label for="exampleInputEmail1">Genero: </label>
+              <input type="email" name="txt_genero" class="form-control" ngModel="{{datafinal[index].generoCajero}}"
+                aria-describedby="emailHelp" placeholder="Enter Genero">
+
+            </div>
+
+            <div class="form-group">
+              <label for="exampleInputEmail1">Estado: </label>
+              <input type="email" name="txt_status" class="form-control" ngModel="{{datafinal[index].estadoCajero}}"
+                maxlength="1" minlength="1" onkeypress="if(event.keyCode<48 || event.keyCode>49){return false;}"
+                id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Estado">
+            </div>
+
+            <div class="modal-footer">
+              <button class="btn btn-primary btn-lg btn-block btn-sm">Actualizar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+//login
+  public functionValidAcceso(data: any) {
+
+    let RstAdmin = this.ChckAdmin.nativeElement.checked;
+    let RstCajero = this.ChckCajero.nativeElement.checked;
+    let RstLogin = '';
+
+    // if (!RstAdmin) {
+    //   console.log(this.ChckCajero.nativeElement.value)
+    // } else {
+    //   console.log(this.ChckAdmin.nativeElement.value)
+    // }
+
+
+    if (RstAdmin == false && RstCajero == false) {
+      this.toastMsg.error('¡Por favor seleccionar Rol.!', '')
+    } else {
+      if (RstAdmin) {
+        RstLogin += 'Admins';
+      } else {
+        RstLogin += 'Cajeros';
+      }
+
+      switch (RstLogin) {
+        case 'Admins':
+          this.ApiConsumo.function_Login_Rol(RstLogin, data.user, data.pswd).subscribe((resp: any) => {
+            this.functionActionLogin(resp, RstLogin);
+          })
+          break;
+        case 'Cajeros':
+          this.ApiConsumo.function_Login_Rol(RstLogin, data.user, data.pswd).subscribe((resp: any) => {
+            this.functionActionLogin(resp, RstLogin);
+          })
+          break;
+      }
+    }
+  }
+
+  private functionActionLogin(InfoArray: any, RolUsuario: string): void {
+
+
+    if (InfoArray != '') {
+      let _Strl_ = '';
+      switch (RolUsuario) {
+        case 'Admins':
+          _Strl_ = '<a href="/Usuarios">Por favor dale click para ingresar.</a>';
+          sessionStorage.setItem('NameUser', InfoArray);
+          break;
+        case 'Cajeros':
+          _Strl_ = '<a href="/Facturacion">Por favor dale click para ingresar.</a>';
+          sessionStorage.setItem('NameUser', InfoArray);
+          break;
+      }
+      this.render.setProperty(this.TxtError.nativeElement, 'innerHTML', _Strl_);
+    } else {
+      this.toastMsg.error('¡La informacion no se encuentra registrada,vuelve a intentar.!', '')
+      this.render.setProperty(this.TxtError.nativeElement, 'innerHTML', '');
+      sessionStorage.removeItem('NameUser');
+    }
+    this.isPswd = false;
+  }
+
+  public functionViewContra(): boolean {
+
+    if (!this.isPswd) {
+      this.isPswd = true;
+      this.ImgSrcPswd = '<i class="fa-sharp fa-solid fa-eye"></i>';
+    } else {
+      this.isPswd = false;
+      this.ImgSrcPswd = '<i class="fa-solid fa-eye-slash"></i>';
+    }
+    this.render.setProperty(this.ImgPswd.nativeElement, 'innerHTML', this.ImgSrcPswd);
+    return this.isPswd;
+  }
+
+
+
+//facturacion
+
+  <div class="bx_grid">
+    <div class="bx_grid_class" data-toggle="modal" data-target="#MediosPago">
+      <i class="fa-solid fa-money-bill"></i>
+      <span>Medios de pago</span>
+    </div>
+    <div class="bx_grid_class" data-toggle="modal" data-target="#CrearFactura">
+      <i class="fa-solid fa-plus"></i>
+      <span>Crear factura</span>
+    </div>
+  </div>
+
+
+  <div class="card-body">
+    <table id="user-table" style="width: 1200px;" class="table table-hover table-striped">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Cedula</th>
+          <th scope="col">NombreCliente</th>
+          <th scope="col">ApellidoCliente</th>
+          <th scope="col">Estado</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody style="text-align: center;">
+        <tr *ngFor="let item of getListarCliente;index as index">
+          <td>{{index+1}}</td>
+          <td>{{getListarCliente[index].cedula}}</td>
+          <td>{{getListarCliente[index].nombreCliente}}</td>
+          <td>{{getListarCliente[index].apellidoCliente}}</td>
+          <td>{{getListarCliente[index].estadoCliente}}</td>
+          <td class="btn-accion">
+            <button (click)="HistorialCliente(getListarCliente[index].idCliente,index)" class="text-danger fw-bold"
+              [attr.data-toggle]="'modal'" [attr.data-target]="'#ModalUsuario'+index" matTooltipPosition="right"
+              matTooltip="Visualizar Factura"><i class="fa-solid fa-scroll"></i></button>
+            <span>&nbsp;</span>
+            <button class="text-success fw-bold" matTooltipPosition="above" matTooltip="Enviar Factura"><i
+                class="fa-brands fa-whatsapp"></i></button>
+          </td>
+        </tr>
+      </tbody>
+
+    </table>
+  </div>
+</div>
+
+
+<ng-container *ngFor="let item of getListarCliente;index as index">
+
+  <div class="modal fade" id="ModalUsuario{{index}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title">
+            Cliente: <strong>{{getListarCliente[index].nombreCliente+"
+              "+getListarCliente[index].apellidoCliente}}</strong>
+          </h3>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <table class="table">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Fecha_Facturacion</th>
+                <th scope="col">Acciones</th>
+              </tr>
+            </thead>
+            <tbody style="text-align: center;">
+              <tr *ngFor="let iterador of getFilterFactura;index as index">
+                <td>{{index+1}}</td>
+                <td>{{getFilterFactura[index].fechaFactura}}</td>
+                <td>
+                  <button class="btn btn-danger"
+                    (click)="imprimirPdf(getFilterFactura[index].idCliente,getFilterFactura[index].idFactura)">Descargar
+                    PDF.</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar Historial</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</ng-container>
+
+<!-- Modal para medios de pago -->
+
+<div class="modal fade" id="MediosPago" tabindex="-1" role="dialog" aria-labelledby="MediosPago" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="exampleModalLabel" align="center">
+          <strong>Medios de pago</strong>
+        </h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="bx_grid">
+
+          <div *ngFor="let item of setTipoPago;index as index">
+            <div class="bx_grid_class">
+              <div class="bx_class">
+                <h4><b>{{setTipoPago[index].metodoPago}}</b></h4>
+                <div class="body_card_bx">
+                  <div *ngIf="index>=2 && index<=3;else templateName">
+                    <i class="fa-solid fa-credit-card"></i>
+                  </div>
+                  <ng-template #templateName>
+                    <i class="fa-solid fa-money-bill"></i>
+                  </ng-template>
+                  <input type="radio" name="data_final" value="{{setTipoPago[index].idPago}}"
+                    style="height:35px; width:35px;">
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary w-100">Modificar </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Cierre de medios de pago -->
+
+<!-- Modal para crear factura -->
+
+<div class="modal fade" id="CrearFactura" tabindex="-1" role="dialog" aria-labelledby="CrearFactura" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"><strong>Crear Factura Electronica</strong></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="formFactura">
+          <div class="txtBx">
+            <div class="bx_accion_input">
+              <label>Fecha Factura</label>
+              <input type="text" class="form-control" readonly value="{{dateToday}}">
+            </div>
+            <div class="bx_accion_input">
+              <label>Cedula del usuario</label>
+              <input type="text" id="txt_0" class="form-control" #txtCedula (keyup)="addFactura(txtCedula.value)"
+                value="">
+            </div>
+            <div class="bx_accion_input">
+              <label>Nombre Cliente: </label>
+              <input type="text" id="txt_1" class="form-control" formControlName="nombreCliente" readonly value="">
+            </div>
+            <div class="bx_accion_input">
+              <label>Correo Cliente: </label>
+              <input type="text" id="txt_2" class="form-control" formControlName="correoCliente" readonly value="">
+            </div>
+
+            <div class="bx_accion_input">
+              <label>Direccion Cliente: </label>
+              <input type="text" id="txt_3" class="form-control" formControlName="DireccionCliente" readonly value="">
+            </div>
+            <div class="bx_accion_input">
+
+              <label>Telefono Cliente: </label>
+              <input type="text" id="txt_4" class="form-control" formControlName="telefonoCliente" readonly value="+57">
+            </div>
+          </div>
+
+          <div class="mt-3">
+            <div class="form-group">
+              <select class="form-control" id="cmbMain">
+                <!-- <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option> -->
+              </select>
+            </div>
+          </div>
+
+          <div class="mt-3">
+            <div class="form-group">
+              <input type="text" class="form-control" minlength="2" maxlength="2"
+                onkeypress="if(event.keyCode<48 || event.keyCode>57){return false;}">
+            </div>
+          </div>
+          <div class="mt-3">
+            <div class="card">
+              <div class="card-body">
+
+                <div id="bxProductos">
+                  <div class="children-productos bg-light">
+                    caja hit
+                  </div>
+                  <div class="children-productos bg-light">caja hit </div>
+                  <div class="children-productos bg-light">caja hit </div>
+                  <div class="children-productos bg-light">caja hit </div>
+                  <div class="children-productos bg-light">caja hit </div>
+                  <div class="children-productos bg-light">caja hit </div>
+                  <div class="children-productos bg-light">caja hit </div>
+                  <div class="children-productos bg-light">caja hit </div>
+                  <div class="children-productos bg-light">caja hit </div>
+                </div>
+                <div class="mx-auto m-3" style="text-align: center;">
+                  <a class="text-ligth"><strong>*Para eliminar los productos por favor dale clic encima del producto
+                      seleccionado.*</strong></a>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="mx-auto m-3">
+            <div class="txtTitle">
+              <label>Total Pagar:</label>
+            </div>
+            <input type="text" class="form-control" readonly>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary w-100">Crear Factura</button>
+      </div>
+    </div>
+  </div>
+
+  //TS de facturacion
+    public function_SetClientes(): void {
+    this.appConsumo.function_GET_LISTAR('Clientes').subscribe((resp: any) => {
+      this.function_GetCliente(resp);
+    });
+  }
+
+  public function_GetCliente(data: any) {
+    this.getListarCliente = data;
+    console.log(this.getListarCliente)
+  }
+
+  public async imprimirPdf(objData: string, idFactura: number) {
+
+    let UsuarioFilter = this.getListarCliente.filter((item: { idCliente: string; }) => item.idCliente == objData)
+
+    console.log(UsuarioFilter[0]);
+
+    let obj = [
+      {
+        producto: 'galleta',
+        unidad: '2',
+        precioUnidad: '2000',
+        vtotal: '2000'
+      }, {
+        producto: 'galleta',
+        unidad: '2',
+        precioUnidad: '2000',
+        vtotal: '2000'
+      }
+    ]
+
+    const pdfDefinicion: any = {
+      content: [
+        {
+          image: await this.getBase64ImageFromURL('../../../assets//LogoFactura/AngularPdf.png'),
+          alignment: 'center',
+          width: 75
+        },
+        {
+          text: 'FACTURA ELECTRONICA',
+          fontSize: 16,
+          alignment: 'center',
+          color: '#047886',
+        },
+        {
+          text: 'POSBYU',
+          fontSize: 20,
+          bold: true,
+          alignment: 'center',
+          decoration: 'underline',
+          color: 'skyblue'
+        }, {
+          text: 'NIT. 860.007.322-9',
+          fontSize: 10,
+          alignment: 'center',
+          color: '#047886',
+        }, {
+          text: 'Datos Personales',
+          style: 'sectionHeader'
+        }, {
+          columns: [
+            [
+              {
+                text: `${UsuarioFilter[0].nombreCliente + "" + UsuarioFilter[0].apellidoCliente}`,
+                bold: true
+              },
+              { text: `${UsuarioFilter[0].dire}` },
+              { text: `${UsuarioFilter[0].correo}` },
+              { text: `${UsuarioFilter[0].telefono}` }
+            ],
+            [
+              {
+                text: `Fecha: ${new Date().toLocaleString()}`,
+                alignment: 'right'
+              },
+              {
+                text: `Factura Nº: ${idFactura}`,
+                alignment: 'right'
+              }
+            ]
+          ]
+        }, {
+          text: 'Detalle de la compra: ',
+          style: 'sectionHeader'
+        }, {
+          table: {
+            headerRows: 1,
+            widths: ['*', 'auto', 'auto', 'auto'],
+            body: [
+              ['Producto', 'Precio-Unidad', 'Cantidad', 'Valor Total']
+            ]
+          }
+        }, {
+          text: 'Terminos y condiciones.',
+          style: 'sectionHeader'
+        }, {
+          ul: [
+            'Para garantiza plazo de 10 dias habiles.',
+            'La garantía del producto estará sujeta a los términos y condiciones del fabricante.',
+            'Esta es una factura generada por el sistema.',
+          ],
+        }, {
+          text: '',
+          bold: true,
+          style: 'sectionFooter'
+        }, {
+          text: '________________________________________________________',
+          bold: true,
+          alignment: 'left',
+        },
+        {
+          text: 'Firma digital de la persona encargada',
+          bold: true,
+          alignment: 'left',
+        }
+      ],
+      styles: {
+        sectionHeader: {
+          bold: true,
+          decoration: 'underline',
+          fontSize: 14,
+          margin: [0, 15, 0, 15]
+        }, sectionFooter: {
+          margin: [0, 0, 0, 60]
+        }
+      }, footer: {
+        columns: [
+          [
+            {
+              text: `Copyright @ 2023 POSBYU.`,
+              alignment: 'center',
+              bold: true,
+              fontSize: 10
+            }
+          ]
+        ]
+      }
+
+    }
+
+    for (let index = 0; index < obj.length; ++index) {
+      pdfDefinicion.content[7].table.body.push([obj[index].producto, obj[index].precioUnidad,
+      obj[index].unidad, obj[index].vtotal])
+    }
+
+    pdfDefinicion.content[7].table.body.push([{ text: 'Total a pagar', colSpan: 3 }, {}, {}, '4000'])
+
+    const PDF = pdfMake.createPdf(pdfDefinicion);
+    PDF.download();
+
+  }
+
+  public getBase64ImageFromURL(url: string) {
+    return new Promise((resolve, reject) => {
+      var img = new Image();
+      img.setAttribute("crossOrigin", "anonymous");
+
+      img.onload = () => {
+        let canvas = document.createElement("canvas");
+        canvas.width = img.width;
+        canvas.height = img.height;
+
+        let ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0);
+
+        let dataURL = canvas.toDataURL("image/png");
+
+        resolve(dataURL);
+      };
+
+      img.onerror = error => {
+        reject(error);
+      };
+
+      img.src = url;
+    });
+
+  }
+
+  public HistorialCliente(item: number, identity: number) {
+    let RstFilter = this.getListarFactura.filter((index: { idCliente: number }) => index.idCliente == item);
+    return this.getFilterFactura = RstFilter;
+  }
+
+  public setTipoPagos() {
+    this.appConsumo.function_GET_LISTAR('TipoPago').subscribe((resp: any) => {
+      this.setTipoPago = resp;
+      console.log(this.setTipoPago);
+    })
+  }
+
+  public addFactura(data: string) {
+    if (data.length == 8 || data.length == 10) {
+      var RstFactura = this.getListarCliente.filter((item: { cedula: string }) => item.cedula == data);
+      ;
+      this.formFactura = new FormGroup({
+        nombreCliente: new FormControl(RstFactura[0].nombreCliente),
+        correoCliente: new FormControl(RstFactura[0].correo),
+        DireccionCliente: new FormControl(RstFactura[0].dire),
+        telefonoCliente: new FormControl(RstFactura[0].telefono)
+      });
+
+    } else {
+      this.formFactura.reset();
+    }
+
+    console.log(this.formFactura.value);
+
+
+  }
+
+  public getProductos() {
+
+    let cmbMain = document.getElementById('cmbMain') as HTMLElement;
+    let countCmb = 1;
+
+    this.appConsumo.function_GET_LISTAR('Productos').subscribe((resp: any) => {
+      for (let index in resp) {
+        cmbMain.innerHTML += `<option value="${resp[index].codigoBarras}" >${countCmb++}.${resp[index].nombreProducto}</option>`;
+      }
+    })
+  }

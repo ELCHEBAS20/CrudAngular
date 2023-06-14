@@ -1,0 +1,47 @@
+<section>
+
+  <div class="container">
+    <div class="row justify-content-md-center">
+      <div class="col-md-auto bx-form">
+        <div id="imgBox">
+          <img src="../../assets/ImgProfile.jpg" class="rounded" width="450" height="500" alt="">
+        </div>
+
+        <div id="childrenForm">
+
+          <div class="text text-center " align="center">
+            <h1><strong>Sistema de facturacion <i class="fa-solid fa-money-bill"></i>.</strong></h1>
+          </div>
+
+          <div class="form-main">
+            <form [formGroup]="setUser" (ngSubmit)="onsubmit()" novalidate>
+              <div class="form-group">
+                <label for="exampleInputEmail1" style="position: relative;left: 8px;">Usuario:</label>
+                <input type="text" class="form-control" formControlName="user" id="exampleInputEmail1"
+                  aria-describedby="emailHelp" placeholder="Enter User,please." required>
+                <div *ngIf="setUser.get('user')?.touched && setUser.get('user')?.errors?.['required']">
+                  <small style="color: red !important;">Este campo es requerido</small>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1" style="position: relative;left: 8px;">Contraseña:</label>
+                <a #ImgBoxPswd (click)="functionViewContra()"><i class="fa-solid fa-eye-slash"></i></a>
+                <input type="{{!isPswd ? 'password' : 'text' }}" class="form-control" formControlName="pswd"
+                  id="exampleInputPassword1" placeholder="Enter Password,please." required>
+                <div *ngIf="setUser.get('pswd')?.touched && setUser.get('pswd')?.errors?.['required']">
+                  <small style="color: red !important;">Este campo es requerido</small>
+                </div>
+                <div *ngIf="setUser.get('pswd')?.touched && setUser.get('pswd')?.errors?.['minlength']">
+                  <small style="color: red !important;">Este campo requiere longitud max de
+                    {{setUser.get('pswd')?.errors?.['minlength'].requiredLength}}.</small>
+                </div>
+              </div>
+
+              <button class="btn btn-primary w-100">Ingresar al aplicativo.</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

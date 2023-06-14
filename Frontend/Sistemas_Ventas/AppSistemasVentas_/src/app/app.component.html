@@ -1,0 +1,7 @@
+<div *ngIf="validSession();else templateSession">
+  <router-outlet></router-outlet>
+</div>
+
+<ng-template #templateSession>
+  <app-login-app></app-login-app>
+</ng-template>

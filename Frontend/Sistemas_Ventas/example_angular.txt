@@ -1,0 +1,34 @@
+  this.ObjVenta.push({
+               Elemento:event.value,
+               cantidad:1
+          })
+           
+           if(this.ArrayElemt.length>0){
+            
+
+              for(let index in this.ArrayElemt){
+                       if(this.ArrayElemt[index]==event.value){
+                              isSame=true;
+                              TempPos=parseInt(index);
+                              break;
+                       }
+              }
+
+               if(isSame!=false){
+                this.ArrayCount[TempPos]++;
+               }else{
+                this.ArrayElemt.push(this.ObjVenta[0].Elemento);
+            this.ArrayCount.push(this.ObjVenta[0].cantidad);
+               }
+
+           }else{
+              this.ArrayElemt.push(this.ObjVenta[0].Elemento);
+              this.ArrayCount.push(this.ObjVenta[0].cantidad)
+           }
+
+           console.log(this.ArrayElemt);
+           console.log(this.ArrayCount);
+          
+           event.value='';
+
+        }

@@ -1,0 +1,49 @@
+<!-- Modal -->
+<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="container">
+          <h5 class="modal-title mx-auto" id="exampleModalLabel">Informacion</h5>
+        </div>
+        <button type="button" class="close" #closeModal data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="form" novalidate (ngSubmit)="onSubmit()">
+          <div *ngFor="let keyForm  of getFormValue()">
+            <div class="container">
+              <div class="row justify-content-center" style="grid-template-rows: 10px;">
+                <div class="col-12">
+                  <label style="position: relative;left: 5px;">{{keyForm}}</label>
+                  <input type="text" (keypress)="KeyBlockPress(keyForm,$event)"
+                    [maxLength]="keyForm=='estado' || keyForm=='status' ? 1 : 25 "
+                    [readOnly]="keyForm=='id' ? true : false" id="{{keyForm}}"
+                    [type]="keyForm!='contraseña' ? 'text': 'password'" class="form-control w-100"
+                    formControlName="{{keyForm}}" placeholder="{{keyForm}}" required>
+                  <div *ngFor="let items of ExepArray;index as index">
+                    <ng-container *ngIf="keyForm!='contraseña' && index==0">
+                      <div *ngIf="exepcionForm(keyForm,items)">
+                        <small style="color: red !important;">{{getMsgError(items,keyForm)}}</small>
+                      </div>
+                    </ng-container>
+                    <ng-container *ngIf="keyForm=='contraseña' && index>=0">
+                      <div *ngIf="exepcionForm(keyForm,items)">
+                        <small style="color: red !important;">{{getMsgError(items,keyForm)}}</small>
+                      </div>
+                    </ng-container>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style="text-align: center;position: relative;top: 14px;">
+            <button class="w-100 btn btn-primary">Modificar Elemento</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

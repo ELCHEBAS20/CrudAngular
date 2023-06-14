@@ -1,0 +1,67 @@
+<button data-toggle="modal" (click)="resetForm()" data-target="#exampleModal" class="btn btn-success"> <i
+    class="fa-solid fa-plus"></i>
+  Agregar data</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Formato para agregar.</h5>
+        <button #closeModal type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="formGeneral" (ngSubmit)="onSubmit()" novalidate>
+          <div *ngFor="let keyForm  of getElements">
+            <div *ngIf="keyForm!='id'">
+              <div class="container">
+                <div class="row justify-content-center" style="grid-template-rows: 10px;">
+                  <div class="col-12">
+                    <label style="position: relative;left: 5px;">{{keyForm}}</label>
+                    <div *ngIf="keyForm=='FkFormulario'else templateFk">
+                      <select class="form-select" aria-label="Default select example" formControlName="{{keyForm}}">
+                        <ng-container *ngFor="let fkItem of selectFk">
+                          <option value="{{fkItem.id}}">{{fkItem.value}}</option>
+                        </ng-container>
+                      </select>
+                    </div>
+
+                    <ng-template #templateFk>
+                      <input type="text" id="{{keyForm}}" [maxLength]="keyForm=='estado' || keyForm=='status' ? 1 : 25"
+                        (keypress)="KeyBlockPress(keyForm,$event)" [readOnly]="keyForm!='id' ? false : true"
+                        [type]="keyForm!='contraseña' ? 'text': 'password'" class="form-control w-100"
+                        formControlName="{{keyForm}}" placeholder="{{keyForm}}" required>
+                    </ng-template>
+
+
+                    <div *ngFor="let items of ExepArray;index as index">
+                      <ng-container *ngIf="keyForm!='contraseña' && index==0">
+                        <div *ngIf="exepcionForm(keyForm,items)">
+                          <small style="color: red !important;">{{getMsgError(items,keyForm)}}</small>
+                        </div>
+                      </ng-container>
+                      <ng-container *ngIf="keyForm=='contraseña' && index>=0">
+                        <div *ngIf="exepcionForm(keyForm,items)">
+                          <small style="color: red !important;">{{getMsgError(items,keyForm)}}</small>
+                        </div>
+                      </ng-container>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="m-3">
+            <div style="text-align: center;">
+              <button class="btn btn-primary w-75">Enviar Informacion</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

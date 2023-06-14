@@ -1,0 +1,91 @@
+#spinner-text {
+  position: absolute;
+  top: 44%;
+  left: 50%;
+}
+
+mat-spinner {
+  position: relative;
+  left: 20px;
+}
+
+.four_zero_four_bg {
+  background: url('../../../assets/dist/img/Gif404.gif');
+  height: 400px;
+  background-position: center;
+}
+
+.page_404 {
+  width: 700px;
+  height: 200px;
+  position: absolute;
+  top: 25%;
+  left: 40%;
+}
+
+.four_zero_four_bg h1 {
+  position: relative;
+  top: -70px;
+}
+
+.custom-switch {
+  padding-left: 2.25rem;
+  padding-bottom: 1rem;
+}
+
+mat-slide-toggle::before {
+  background: red;
+}
+
+.custom-control {
+  position: relative;
+  left: 30px;
+  top: 7px;
+}
+
+.custom-control-input:focus~.custom-control-label::before {
+  border-color: none;
+  box-shadow: 0 0 0 0.2rem rgba(255, 47, 69, 0.25) !important;
+}
+
+.custom-control-input:checked~.custom-control-label::before {
+  border-color: none;
+  background-color: red !important;
+}
+
+.custom-control-input:active~.custom-control-label::before {
+  background-color: none;
+  border-color: none;
+}
+
+.custom-control-input:focus:not(:checked)~.custom-control-label::before {
+  border-color: none;
+}
+
+.custom-control-input-green:not(:disabled):active~.custom-control-label::before {
+  background-color: red !important;
+}
+
+mat-form-field {
+  background: #fff;
+}
+
+::placeholder {
+  font-weight: bold;
+}
+
+.mdc-snackbar__surface.ng-tns-c159-2 {
+  background: red;
+}
+
+#header {
+  width: 80.2rem;
+  height: 53px;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  left: 125px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
